@@ -1,0 +1,29 @@
+def job_scheduling(jobs): 
+     
+    jobs.sort(key=lambda x: x[2], reverse=True) 
+     
+    n = len(jobs) 
+    slots = [-1] * n    
+    total_profit = 0 
+     
+    for job in jobs: 
+        job_id, deadline, profit = job 
+         
+        for i in range(min(n, deadline) - 1, -1, -1): 
+            if slots[i] == -1: 
+                slots[i] = job_id 
+                total_profit += profit 
+                break 
+     
+    print("Selected Jobs:", [job for job in slots if job != -1]) 
+    print("Total Profit:", total_profit) 
+ 
+ 
+jobs = [ 
+('J1', 2, 100), 
+('J2', 1, 50), 
+('J3', 2, 10), 
+('J4', 1, 20), 
+('J5', 3, 30) 
+] 
+job_scheduling(jobs)

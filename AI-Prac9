@@ -1,0 +1,79 @@
+import heapq
+
+# Grid (0 = free path, 1 = obstacle)
+grid = [
+    [0, 0, 0, 0],
+    [1, 1, 0, 1],
+    [0, 0, 0, 0],
+    [0, 1, 1, 0]
+]
+
+rows = len(grid)
+cols = len(grid[0])
+
+# Start and Goal positions
+start = (0, 0)
+goal = (3, 3)
+
+# Directions: up, down, left, right
+directions = [(-1,0), (1,0), (0,-1), (0,1)]
+
+# Dijkstra Algorithm
+def dijkstra(grid, start, goal):
+
+    pq = []
+    heapq.heappush(pq, (0, start))
+
+    visited = set()
+    distance = {start: 0}
+    parent = {}
+
+    while pq:
+
+        cost, current = heapq.heappop(pq)
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+
+        # Goal reached
+        if current == goal:
+            break
+
+        for dx, dy in directions:
+
+            nx = current[0] + dx
+            ny = current[1] + dy
+
+            # Check valid path
+            if 0 <= nx < rows and 0 <= ny < cols:
+                if grid[nx][ny] == 0:
+
+                    new_cost = cost + 1
+
+                    if (nx, ny) not in distance or new_cost < distance[(nx, ny)]:
+
+                        distance[(nx, ny)] = new_cost
+                        parent[(nx, ny)] = current
+
+                        heapq.heappush(pq, (new_cost, (nx, ny)))
+
+    # Find path
+    path = []
+    node = goal
+
+    while node != start:
+        path.append(node)
+        node = parent[node]
+
+    path.append(start)
+    path.reverse()
+
+    return path
+
+# Run Algorithm
+path = dijkstra(grid, start, goal)
+
+print("Shortest Path:")
+print(path)

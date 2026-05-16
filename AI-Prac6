@@ -1,0 +1,24 @@
+# Simple Customer Chatbot
+
+print("Welcome to Customer Support Chatbot")
+print("Type 'bye' to stop\n")
+
+while True:
+
+    user = input("You: ").lower()
+
+    if user == "hello":
+        print("Bot: Hello! How can I help you?")
+
+    elif user == "price":
+        print("Bot: Our product price starts from Rs.500")
+
+    elif user == "delivery":
+        print("Bot: Delivery takes 3 to 5 days")
+
+    elif user == "bye":
+        print("Bot: Thank you!")
+        break
+
+    else:
+        print("Bot: Sorry, I don't understand")

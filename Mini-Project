@@ -1,0 +1,29 @@
+# AI Smart Traffic Signal System
+
+road1 = int(input("Enter vehicles on Road 1: "))
+road2 = int(input("Enter vehicles on Road 2: "))
+road3 = int(input("Enter vehicles on Road 3: "))
+road4 = int(input("Enter vehicles on Road 4: "))
+
+# Store traffic data
+traffic = {
+    "Road 1": road1,
+    "Road 2": road2,
+    "Road 3": road3,
+    "Road 4": road4
+}
+
+# Find road with maximum traffic
+max_road = max(traffic, key=traffic.get)
+
+print("\nTraffic Data:")
+print(traffic)
+
+print("\nGreen Signal Given To:", max_road)
+print("Vehicle Count:", traffic[max_road])
+
+# AI Decision
+if traffic[max_road] > 20:
+    print("Signal Time: 60 seconds")
+else:
+    print("Signal Time: 30 seconds")

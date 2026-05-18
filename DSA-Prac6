@@ -1,0 +1,66 @@
+#include <iostream> 
+#include <algorithm> 
+using namespace std; 
+ 
+struct Edge { 
+    int u, v, w; 
+}; 
+ 
+bool cmp(Edge a, Edge b) { 
+    return a.w < b.w; 
+} 
+ 
+int parent[100]; 
+ 
+// Find function 
+int find(int x) { 
+    while (parent[x] != x) 
+        x = parent[x]; 
+    return x; 
+} 
+ 
+// Union function 
+void unite(int a, int b) { 
+    parent[a] = b; 
+} 
+ 
+int main() { 
+    int V, E; 
+ 
+    cout << "Enter number of villages: "; 
+    cin >> V; 
+ 
+    cout << "Enter number of edges: "; 
+    cin >> E; 
+ 
+    Edge edges[100]; 
+ 
+    cout << "Enter edges (u v cost):\n"; 
+    for (int i = 0; i < E; i++) { 
+        cin >> edges[i].u >> edges[i].v >> edges[i].w; 
+    } 
+ 
+    // Initialize parent 
+    for (int i = 0; i < V; i++) 
+        parent[i] = i; 
+    // Sort edges by weight 
+    sort(edges, edges + E, cmp); 
+ 
+    int totalCost = 0; 
+    cout << "\nMinimum Spanning Tree:\n"; 
+    for (int i = 0; i < E; i++) { 
+        int u = edges[i].u; 
+        int v = edges[i].v; 
+ 
+        int set_u = find(u); 
+        int set_v = find(v); 
+ 
+        if (set_u != set_v) { 
+            cout << u << " - " << v << " : " << edges[i].w << endl; 
+            totalCost += edges[i].w; 
+            unite(set_u, set_v); 
+        } 
+    } 
+    cout << "Total Cost = " << totalCost; 
+    return 0; 
+} 

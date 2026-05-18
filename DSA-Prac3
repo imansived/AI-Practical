@@ -1,0 +1,85 @@
+ #include <iostream> 
+using namespace std; 
+ 
+int board[20][20];    
+int n;               
+int solutionCount = 0; 
+ 
+bool isSafe(int row, int col) 
+{ 
+    int i, j; 
+ 
+    for (i = 0; i < row; i++) 
+    { 
+        if (board[i][col] == 1) 
+            return false; 
+    } 
+ 
+    for (i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) 
+    { 
+        if (board[i][j] == 1) 
+            return false; 
+    } 
+ 
+    for (i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) 
+    { 
+        if (board[i][j] == 1) 
+            return false; 
+    } 
+ 
+    return true; 
+} 
+ 
+void printSolution() 
+{ 
+    solutionCount++; 
+ 
+    cout << "\nSolution " << solutionCount << ":\n"; 
+ 
+    for (int i = 0; i < n; i++) 
+    { 
+        for (int j = 0; j < n; j++) 
+        { 
+            cout << board[i][j] << " "; 
+        } 
+        cout << endl; 
+    } 
+} 
+ 
+void solveNQueens(int row) 
+{ 
+    if (row == n) 
+    { 
+        printSolution(); 
+        return; 
+    } 
+ 
+    for (int col = 0; col < n; col++) 
+    { 
+        if (isSafe(row, col)) 
+        { 
+            board[row][col] = 1;     
+ 
+            solveNQueens(row + 1);     
+ 
+            board[row][col] = 0;      
+        } 
+    } 
+} 
+ 
+int main() 
+{ 
+    cout << "No of queens: "; 
+    cin >> n; 
+ 
+    
+    for (int i = 0; i < n; i++) 
+        for (int j = 0; j < n; j++) 
+            board[i][j] = 0; 
+ 
+    solveNQueens(0); 
+ 
+    cout << "\nTotal solutions: " << solutionCount << endl; 
+ 
+    return 0; 
+}

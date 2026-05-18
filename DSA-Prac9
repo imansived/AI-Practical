@@ -1,0 +1,106 @@
+#include <iostream> #include <climits> using namespace std;
+
+class OBST {
+
+
+int keys[10]; int freq[10];
+int cost[10][10]; int n;
+
+public:
+
+
+void create() {
+
+
+cout << "Enter number of keys: "; cin >> n;
+ 
+for(int i = 0; i < n; i++) {
+
+
+cout << "Enter key: "; cin >> keys[i];
+
+cout << "Enter frequency: "; cin >> freq[i];
+}
+}
+
+
+int sum(int i, int j) {
+
+
+int s = 0;
+
+
+for(int k = i; k <= j; k++) { s += freq[k];
+}
+
+
+return s;
+}
+
+
+void optimalBST() {
+
+
+for(int i = 0; i < n; i++) { cost[i][i] = freq[i];
+}
+
+
+for(int length = 2; length <= n; length++) {
+ 
+for(int i = 0; i <= n - length; i++) {
+
+
+int j = i + length - 1;
+
+
+cost[i][j] = INT_MAX;
+
+
+int freqSum = sum(i, j);
+
+
+for(int r = i; r <= j; r++) {
+
+
+int leftCost; int rightCost;
+
+if(r > i)
+leftCost = cost[i][r - 1]; else
+leftCost = 0;
+
+
+if(r < j)
+rightCost = cost[r + 1][j]; else
+rightCost = 0;
+
+
+int totalCost = leftCost + rightCost + freqSum;
+
+if(totalCost < cost[i][j]) { cost[i][j] = totalCost;
+ 
+}
+}
+}
+}
+
+
+cout << "\nOptimal Cost of BST = "
+<< cost[0][n - 1] << endl;
+}
+};
+
+
+int main() {
+
+
+OBST o;
+
+
+o.create();
+
+
+o.optimalBST();
+
+
+return 0;
+}
